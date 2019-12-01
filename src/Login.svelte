@@ -13,7 +13,6 @@ let email
 let password
 
 function submitLogin () {
-  console.log(backendUrl)
   axios.post(backendUrl + '/login', { email: email, pw: password })
     .then((res) => {
       dispatch('login', true)

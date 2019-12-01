@@ -51,8 +51,6 @@ function addNewItem (ev) {
 }
 
 function deleteItem (ev) {
-  console.log(ev.detail)
-  console.log(ev.detail.itemId)
   axios.delete(backendUrl + '/todo/' + ev.detail.itemId)
     .then(() => {
       items = items.filter(function (item) {
@@ -63,7 +61,6 @@ function deleteItem (ev) {
 
 function toggleHideCompleted () {
   hideCompleted = !hideCompleted
-  console.log(hideCompleted)
 }
 
 function handleLogin (isSuccess) {
