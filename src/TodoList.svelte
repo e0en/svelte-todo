@@ -42,7 +42,8 @@ function addNewItem (ev) {
   const newItem = { itemId: newId, content: newContent, isComplete: false }
   axios.post(backendUrl + '/todo', newItem)
     .then(() => {
-        items.push(newItem)
+        items = [...items, newItem]
+        newContent = ''
         return false
     })
 
@@ -85,10 +86,10 @@ onMount(async () => { getAll() })
 </script>
 
 <div class="container todo-list">
-  <form class="field" on:submit={addNewItem}>
+  <form class="field" on:submit|preventDefault={addNewItem}>
     <p class="control">
       <label for="newContent">Add a new task</label><br />
-      <input class="input" type="text" name="newContent" value={newContent} />
+      <input class="input" type="text" name="newContent" bind:value={newContent} />
     </p>
   </form>
   <div class="field">
