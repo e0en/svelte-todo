@@ -1,8 +1,14 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
+const frontendPath = require('./settings.js').frontendPath;
 
 const mode = process.env.NODE_ENV || 'development';
 const prod = mode === 'production';
+
+console.log(frontendPath)
 
 module.exports = {
 	entry: {
@@ -58,7 +64,38 @@ module.exports = {
 	plugins: [
 		new MiniCssExtractPlugin({
 			filename: '[name].css'
-		})
+		}),
+    new WorkboxPlugin.GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true,
+      importWorkboxFrom: 'local'
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      title: 'Svelte-Todo',
+      favicon: './src/favicon.png',
+    }),   
+		new WebpackPwaManifest({
+			name: 'My Progressive Web App',
+			short_name: 'MyPWA',
+			description: 'My awesome Progressive Web App!',
+			background_color: '#ffffff',
+			theme_color: '#2196F3',
+			crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
+			ios: true,
+      scope: frontendPath,
+			icons: [
+				{
+					src: path.resolve('src/favicon.png'),
+					sizes: [120, 180, 167, 152, 192],
+					ios: true,
+				},
+				{
+					src: path.resolve('src/favicon.png'),
+					size: [32, 64, 96, 128, 192, 512]
+				}
+			]
+		}),
 	],
 	devtool: prod ? false: 'source-map'
 };
