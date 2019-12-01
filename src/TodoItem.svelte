@@ -70,9 +70,4 @@ input[type=checkbox]{
   vertical-align: middle;
   height: 100%;
 }
-button.delete {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
 </style>

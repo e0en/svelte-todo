@@ -116,7 +116,7 @@ div.todo-list {
   margin: 1em auto;
   text-align: left;
 }
-.content ul {
+ul {
   list-style-type: none;
   margin-left: 0;
   padding-left: 0;

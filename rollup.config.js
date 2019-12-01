@@ -5,6 +5,8 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import postcss from 'rollup-plugin-postcss';
 
+const frontendPath = require('./settings.js').frontendPath;
+
 const production = !process.env.ROLLUP_WATCH;
 
 export default {
@@ -19,11 +21,8 @@ export default {
 		svelte({
 			// enable run-time checks when not in production
 			dev: !production,
-			// we'll extract any component CSS out into
-			// a separate file — better for performance
-			css: css => {
-				css.write('public/build/bundle.css');
-			}
+      emitCss: true,
+      css: css => { css.write('public/build/bundle.css') }
 		}),
 
 		// If you have external dependencies installed from
@@ -36,7 +35,7 @@ export default {
 			dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')
 		}),
     postcss(),
-		commonjs(),
+    commonjs(),
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
